@@ -61,3 +61,79 @@ class Inventory:
             if product.name == name:
                 return product
         return None
+        
+    def print_products(inventory):
+        if inventory.is_empty():
+            print("The inventory is empty.")
+            return
+    
+        print("Products:")
+        for product in inventory.list_products():
+            print(
+                f"- {product.name} "
+                f"(Quantity: {product.quantity}) "
+                f"[Category: {product.category}]"
+            )
+
+
+    def main():
+        inventory = Inventory()
+    
+        menu = """
+    ==== Inventory Manager ====
+    1. Add a product
+    2. List products
+    3. Update product quantity
+    4. Remove a product
+    5. Clear inventory
+    6. Exit
+    Select an option: """
+    
+        while True:
+            choice = input(menu).strip()
+    
+            if choice == "1":
+                name = input("Product name: ").strip()
+                quantity = int(input("Quantity: "))
+                category = input("Category [General]: ").strip() or "General"
+    
+                try:
+                    inventory.add_product(name, quantity, category)
+                    print(f'Product "{name}" added.')
+                except ValueError as e:
+                    print(f"Error: {e}")
+    
+            elif choice == "2":
+                print_products(inventory)
+    
+            elif choice == "3":
+                name = input("Product name: ").strip()
+                quantity = int(input("New quantity: "))
+    
+                if inventory.update_quantity(name, quantity):
+                    print(f'Quantity of "{name}" updated.')
+                else:
+                    print(f'Product "{name}" not found.')
+    
+            elif choice == "4":
+                name = input("Product name to remove: ").strip()
+    
+                if inventory.remove_product(name):
+                    print(f'Product "{name}" removed.')
+                else:
+                    print(f'Product "{name}" not found.')
+    
+            elif choice == "5":
+                inventory.clear_inventory()
+                print("The inventory has been cleared.")
+    
+            elif choice == "6":
+                print("Closing the Inventory Manager....")
+                break
+    
+            else:
+                print("Invalid option. Please try again.")
+    
+    
+    if __name__ == "__main__":
+        main()
