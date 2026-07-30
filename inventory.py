@@ -40,3 +40,24 @@ class Inventory:
                 product.quantity = quantity
                 return True
         return False
+    
+    #Feature 4
+    def remove_product(self, name):
+        for product in self.products:
+            if product.name == name:
+                self.products.remove(product)
+                return True
+        return False
+
+    # Feature 5 (added)
+    def clear_inventory(self):
+        self.products = []
+
+    def is_empty(self):
+        return len(self.products) == 0
+
+    def find_product(self, name):
+        for product in self.products:
+            if product.name == name:
+                return product
+        return None
